@@ -1,0 +1,313 @@
+#!/bin/bash
+##2012-11-21#######
+##make by G.M######
+##version 3.0######
+red="\033[31m"
+end="\033[0m"
+yel="\033[33m"
+pur="\033[35m"
+#function-all-ips DIR##
+. /tools/function-all-ips
+server="192.168.50.141 192.168.50.142 192.168.50.143 192.168.50.144 192.168.50.145 192.168.50.146 192.168.50.147 192.168.50.148 192.168.50.149 192.168.50.150 192.168.50.151 192.168.50.152 192.168.50.153 192.168.50.154 192.168.50.155 192.168.50.156"
+ll=`cat /tools/function-all-ips |awk -F = '{print $1}' |grep -v '#'`
+grop () {
+if  [ -z "$app" ]
+then
+echo -e "${yel}$ll${end}"|xargs -n 4 |sed 's/ /\]  \[/g'|sed 's/^/\[/g'|sed 's/$/\]/g'
+elif [ -z "$cmd" ]
+then
+echo $ll |grep -w  $app > /dev/null
+if [ $? -eq 0 ]
+then
+eval   echo  '$'$app |xargs -n 1
+else
+echo -e "${red} 输入的组不在  function-all-ips!! $end"
+fi
+elif [ $# -eq 2 ]
+then
+for ip in  `eval   echo "$"$app`
+do
+echo -e "$red $ip $end"
+ssh $ip "$cmd"
+done
+elif [ $# -eq 3 ]
+then
+total=`eval   echo  '$'$app |wc -w`
+tmpnum=`echo $num|wc -w`
+shuzu=(`eval   echo "$"$app`)
+echo $num | egrep "[a-zA-Z]" >/dev/null 2>&1
+satus=$?
+if [ $satus -ne 0 ]
+then
+if [ $tmpnum -eq 1 ]   && [ ${num#-} -le $total  ]
+then
+if [ $num -gt 0 ]
+then
+for s in `seq 0 $(($num-1))`
+do
+ip=${shuzu[$s]}
+echo -e "$red $ip $end"
+ssh $ip "$cmd"
+done
+elif [ $num -lt 0 ]
+then
+num=${num#-}
+rshuzu=(`eval   echo "$"$app |xargs -n 1|tac|xargs`)
+for s in `seq 0 $(($num-1))`
+do
+ip=${rshuzu[$s]}
+echo -e "$red $ip $end"
+ssh $ip "$cmd"
+done
+fi
+elif [ $tmpnum -gt 1 ]
+then
+for s in $num
+do
+if [ $s -le $total ];then
+ip=${shuzu[$(($s-1))]}
+echo -e "$red $ip $end"
+ssh $ip "$cmd"
+else
+echo "$s is more than  $app total"
+fi
+done
+else
+echo "$num is more than  $app total"
+fi
+else
+echo "$num is not number"
+fi
+fi
+}
+ip () {
+if  [  -z "$app"  ]
+then
+echo -e "${yel}$ll${end}"|xargs -n 4 |sed 's/ /\]  \[/g'|sed 's/^/\[/g'|sed 's/$/\]/g'
+else
+echo "$app" | egrep '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$' >/dev/null
+stat=$?
+if [ "$stat" -eq 0 ]
+then
+ping -c 1  $app > /dev/null
+if [ "$?" -eq 0 ]
+then
+if [ -z "$cmd"  ]
+then
+echo -e "${red} 缺少命令 参数 ！！！ $end"
+elif [ $# -eq 2 ]
+then
+echo -e "$red $app  $end"
+ssh $app "$cmd"
+fi
+else
+echo -e "${red}$app 网络不可达${end}"
+fi
+else
+echo -e "${red}无效的IP输入${end}"
+fi
+fi
+}
+SSH () {
+if  [ -z "$app" ]
+then
+echo -e "${yel}$ll${end}"|xargs -n 4 |sed 's/ /\]  \[/g'|sed 's/^/\[/g'|sed 's/$/\]/g'
+else
+echo $ll |grep -w  $app > /dev/null
+if [ $? -ne 0 ]
+then
+echo -e "${red} 输入的组不在  function-all-ips!! $end"
+else
+PS3="选择要连接的服务器编号(Ctrl+C退出)："
+lt=`eval echo "$"$app`
+select ip in   $lt
+do
+ssh $ip
+break
+done
+fi
+fi
+}
+fort () {
+pid=$$
+for i in $ll
+do
+lt=`eval echo "$"$i`
+cat << EOF >>/tmp/$pid.log
+$i () {
+select a in $lt
+do
+ssh \$a
+break
+done
+}
+EOF
+done
+. /tmp/$pid.log
+rm /tmp/$pid.log
+PS3="Select group (Ctrl+C to exit)："
+select ip in   $ll
+do
+PS3="Select server: "
+$ip
+break
+done
+}
+search () {
+if [ -z $app ];then
+echo '-s is search mode'
+echo 'please input IP '
+else
+echo "$app" | egrep '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$' >/dev/null
+stat=$?
+if [ "$stat" -eq 0 ]
+then
+echo $app
+grep -w $app /tools/function-all-ips |awk -F '=' '{print $1}'
+else
+echo  "无效的IP"
+fi
+fi
+}
+cps () {
+if  [ -z "$app" ]
+then
+echo -e "${yel}$ll${end}"|xargs -n 4 |sed 's/ /\]  \[/g'|sed 's/^/\[/g'|sed 's/$/\]/g'
+elif [ ! -z $app ]  && [ -z $sfile ]  || [ ! -f $sfile ]
+then
+echo $ll |grep -w  $app > /dev/null
+if [ $? -eq 0 ]
+then
+echo -e "源文件未指定或不存在！！"
+eval   echo  '$'$app |xargs -n 1
+else
+echo -e "${red} 输入的组不在  function-all-ips!! $end"
+fi
+elif [ $# -eq 3 ]
+then
+for ip in  `eval   echo "$"$app`
+do
+echo -e "$red $ip $end"
+scp  $sfile  $ip:$dfile
+done
+elif [ $# -eq 4 ]
+then
+total=`eval   echo  '$'$app |wc -w`
+tmpnum=`echo $num|wc -w`
+shuzu=(`eval   echo "$"$app`)
+echo $num | egrep "[a-zA-Z]" >/dev/null 2>&1
+satus=$?
+if [ $satus -ne 0 ]
+then
+if [ $tmpnum -eq 1 ]   && [ ${num#-} -le $total  ]
+then
+if [ $num -gt 0 ]
+then
+for s in `seq 0 $(($num-1))`
+do
+ip=${shuzu[$s]}
+echo -e "$red $ip $end"
+scp  $sfile  $ip:$dfile
+done
+elif [ $num -lt 0 ]
+then
+num=${num#-}
+rshuzu=(`eval   echo "$"$app |xargs -n 1|tac|xargs`)
+for s in `seq 0 $(($num-1))`
+do
+ip=${rshuzu[$s]}
+echo -e "$red $ip $end"
+scp  $sfile  $ip:$dfile
+done
+fi
+elif [ $tmpnum -gt 1 ]
+then
+for s in $num
+do
+if [ $s -lt $total ];then
+ip=${shuzu[$(($s-1))]}
+echo -e "$red $ip $end"
+scp  $sfile  $ip:$dfile
+else
+echo "$s is more than  $app total"
+fi
+done
+else
+echo "$num is more than  $app total"
+fi
+else
+echo "$num is not number"
+fi
+fi
+}
+case $1 in
+-i)
+shift
+app=$1
+shift
+cmd=$*
+ip $app "$cmd"
+;;
+-g)
+shift
+app=$1
+shift
+cmd=$1
+shift
+num=$1
+if [ -z "$num"  ];then
+grop $app  "$cmd"
+else
+grop $app "$cmd" "$num"
+fi
+;;
+-cp)
+shift
+app=$1
+shift
+sfile=$1
+shift
+dfile=$1
+shift
+num=$1
+if [ -z "$num" ]
+then
+if [ -z $sfile ] || [ -z $dfile ]
+then
+cps $app
+else
+cps $app "$sfile" "$dfile"
+fi
+else
+if [ -z $sfile ] || [ -z $dfile ]
+then
+echo
+cps $app
+else
+cps $app "$sfile" "$dfile"  "$num"
+fi
+fi
+;;
+-l)
+shift
+app=$1
+SSH $app
+;;
+-a)
+fort
+;;
+-s)
+shift
+app=$1
+search
+;;
+*)
+echo "$0 [-i|-g]"
+echo "-i IP cmd"
+echo "-g group cmd [index] 经常用"
+echo "-cp group src dest [index]"
+echo "-s search mode"
+echo "-l group   (ssh usage) 常用"
+echo "-a 堡垒机模式."
+;;
+esac

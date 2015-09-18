@@ -1,0 +1,6 @@
+#!/bin/bash 
+path=$(dirname $0)
+for i in $(awk -F\  '{print $1}' /etc/hosts) 
+do 
+$path/login.exp $i test1 hostname 
+done 

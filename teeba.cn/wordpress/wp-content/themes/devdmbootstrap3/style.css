@@ -1,0 +1,135 @@
+/*
+Theme Name: DevDmBootstrap3
+Theme URI: http://devdm.com/DevDmBootstrap3
+Author: Danny Machal
+Author URI: http://devdm.com/
+Description: A versatile and responsive Bootstrap WordPress starter theme FOR DEVELOPERS based on Twitter Bootstrap 3.3.1.
+Version: 1.50
+License: GNU General Public License v3
+License URI: http://www.gnu.org/licenses/gpl.html
+Tags: one-column, two-columns, right-sidebar, fluid-layout, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, rtl-language-support, theme-options, translation-ready
+Text Domain: devdmbootstrap3
+
+devdmbootstrap3 WordPress Theme, Copyright 2014 Danny Machal.
+devdmbootstrap3 is distributed under the terms of the GNU GPL v3.
+*/
+
+/* The bootstrap.css file is auto-enqueued in functions.php */
+
+/* YOU SHOULD BE MAKING A CHILD THEME. Don't let me be a bad guy and erase all your hard work with a theme update. I just want to bring you new amazing features. I don't want to destroy your world. I've made a child theme available for you to use. Download it here http://devdm.com/DevDmBootstrap3/child-themes/ */
+
+/****************** Special Blank CSS classes for child themes to use without disturbing core bootstrap styles ****************/
+html,
+body {
+    height: 100%;
+}
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+body.admin-bar .navbar-fixed-top{
+	top:32px;
+}
+.navbar-header .navbar-brand {
+color: white;
+font-size:x-large;
+}
+.navbar-inverse {
+background-color: #015F89;
+border-color: #015F89;
+}
+.navbar-inverse .navbar-nav > li > a {
+color: rgb(216, 216, 216);
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+color: white;
+background-color: #00314f;
+}
+.dmbs-container {
+
+}
+
+.dmbs-header {
+
+}
+
+.dmbs-header-img {
+
+}
+
+.dmbs-header-text {
+
+}
+
+.dmbs-top-menu {
+
+}
+
+.dmbs-content {
+margin: 70px 30px 20px;
+background-color: #fff;
+border: 1px solid #e6e6e6;
+border-radius: 4px;
+}
+.dmbs-main{
+border-right: 1px solid #e6e6e6;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+text-decoration: none;
+background-color: #fff;
+}
+.nav-tabs > li {
+	margin-bottom:0;
+}
+.nav-tabs > li > a{
+line-height: 30px;
+background-color: #fff;
+border: none;
+border-bottom-width: 2px;
+color: #333;
+}
+.nav-tabs > li.active > a, .nav-tabs > li > a:hover,.nav-tabs > li.active > a:hover {
+border: none;
+border-bottom: 2px solid #155faa;
+background-color: #fff;
+}
+
+.nav-tabs > li.active > a{
+font-weight: bold;
+}
+
+.widget a {
+font-size: 12px;
+}
+.widget h3,.widget h2,.widget h3 {
+font-size: 100%;
+}
+
+.dmbs-left {
+
+}
+
+.dmbs-right {
+	margin-left: -1px;
+	border-left: 1px solid #e6e6e6;
+}
+
+.dmbs-right .widget{
+padding: 0 0 10px;
+border-top: 1px solid #e2e2e2;
+}
+
+.dmbs-right .widget:first-child {
+border-top: none;
+}
+
+.dmbs-footer-menu {
+
+}
+
+.dmbs-author-credits {
+
+}
+
+.dmbs-footer {
+
+}

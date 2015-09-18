@@ -1,0 +1,9 @@
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+recordcount=121212
+operationcount=41212
+readallfields=1
+readproportion=0.1
+updateproportion=0.2
+scanproportion=0.3
+insertproportion=0.4
+requestdistribution=zipfian

@@ -1,0 +1,15 @@
+14/12/09 11:04:07 INFO Configuration.deprecation: hadoop.native.lib is deprecated. Instead, use io.native.lib.available
+Loading workload...
+Starting test.
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+/root/teeba-ycsb-hbase/teeba/workload/workload  -target 5000 -threads 216 -p table=usertable
+Loading workload...
+Starting test.
+2014-12-09 11:04:30:715 0 sec: 0 operations; 
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+2014-12-09 11:04:40:721 10 sec: 23692 operations; 2367.78 current ops/sec; [UPDATE AverageLatency(us)=18057.04] [INSERT AverageLatency(us)=13490.97] [READ AverageLatency(us)=76109.2] [SCAN AverageLatency(us)=249737.69] 
+2014-12-09 11:04:45:923 15 sec: 41040 operations; 3334.87 current ops/sec; [UPDATE AverageLatency(us)=5143.5] [INSERT AverageLatency(us)=13.88] [READ AverageLatency(us)=45719.41] [CLEANUP AverageLatency(us)=84365.94] [SCAN AverageLatency(us)=156297.31] 

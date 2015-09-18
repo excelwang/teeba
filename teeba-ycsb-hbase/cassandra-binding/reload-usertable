@@ -1,0 +1,4 @@
+connect sdc-r1-14/9160;
+CREATE KEYSPACE usertable_3 with placement_strategy = 'org.apache.cassandra.locator.SimpleStrategy' and strategy_options = {replication_factor:3};
+USE usertable_3;
+CREATE COLUMN FAMILY data;

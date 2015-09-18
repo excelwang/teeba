@@ -1,0 +1,2 @@
+path=$(dirname $0)
+hbase shell $path/hbase-usertable-recreate.hql
